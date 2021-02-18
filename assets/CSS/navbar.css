@@ -1,1 +1,537 @@
+/*****Top Nav CSS*****/
 
+.mobile-top-nav{
+
+  position:fixed;
+
+  top:0;
+
+  z-index:999;
+
+  width:100%;
+
+  background:white;
+
+  padding:0px 8px 10px 8px;
+
+  box-shadow:.1px .1px 2px rgb(170,170,170);
+
+}
+
+.mobile-top-nav img{
+
+  width:130px;
+
+  margin-top:10px;
+
+  transition:all .5s ease;
+
+}
+
+.mobile-top-nav img:hover{
+
+  margin-left:10px;
+
+}
+
+.mobile-top-nav a{
+
+  float:right;
+
+  position: relative;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  cursor: pointer;
+
+  transition: all .5s ease-in-out;
+
+  border:1px solid;
+
+  padding: 15px 8px;
+
+  border-radius:8px;
+
+  margin-top:10px;
+
+}
+
+.mobile-top-nav a div{
+
+  width: 30px;
+
+  height: 2px;
+
+  display:block;
+
+  background: rgb(60, 60, 60);
+
+  border-radius: 5px;
+
+  transition: all .5s ease-in-out;
+
+}
+
+.mobile-top-nav a div::before,
+
+.mobile-top-nav a div::after{
+
+  content: '';
+
+  position: absolute;
+
+  width: 30px;
+
+  display:block;
+
+  height: 2px;
+
+  background: rgb(60, 60, 60);
+
+  border-radius: 5px;
+
+  transition: all .5s ease-in-out;
+
+}
+
+.mobile-top-nav a div::before{
+
+  transform:translateY(-8px);
+
+}
+
+.mobile-top-nav a div::after{
+
+  transform:translateY(8px);
+
+}
+
+.mobile-top-nav a div.hover{
+
+  background:transparent;
+
+  box-shadow:none;
+
+}
+
+.mobile-top-nav a div.hover::before{
+
+  transform:rotate(45deg);
+
+}
+
+.mobile-top-nav a div.hover::after{
+
+  transform:rotate(-45deg);
+
+}
+
+.mobile-side-nav{
+
+  position:fixed;
+
+  top:0;
+
+  bottom:0;
+
+  right:0;
+
+  width:0;
+
+  z-index:888;
+
+  padding:70px 0 70px 0;
+
+  overflow-y:scroll;
+
+  overflow-x:hidden;
+
+  transition:all .5s ease;
+
+  background:rgb(250,255,250);
+
+  height:100%;
+
+}
+
+.mobile-side-nav .links-div a{
+
+  padding:8px 0 4px 8px;
+
+  margin:8px;
+
+  text-decoration:none;
+
+  display: flex;
+
+  color:black;
+
+  border:1px solid;
+
+  border-color:white;
+
+  transition:all .2s ease;
+
+}
+
+.mobile-side-nav .links-div a:not(.active):hover{
+
+  border:1px solid;
+
+  border-color:transparent;
+
+  box-shadow: 0 0 2px 1px rgb(200,200,200);
+
+  border-radius:20px;
+
+}
+
+.mobile-side-nav .links-div .active{
+
+  background:rgb(100,255,100);
+
+  box-shadow: 0 0 2px .1px rgb(150,150,150);
+
+  border-radius:20px;
+
+}
+
+.mobile-side-nav .links-div .active:hover{
+
+  box-shadow: 0 0 2px 1.4px rgb(200,200,200);
+
+  border-color:white;
+
+  color:black;
+
+}
+
+.mobile-side-nav .links-div a:hover h{
+
+  color:rgb(0,235,0);
+
+}
+
+.mobile-side-nav .links-div a h{
+
+  font-size:18px;
+
+  font-weight:500;
+
+  font-family: 'Baloo Da 2', cursive;
+
+  margin-left:8px;
+
+  margin-top:-3px;
+
+}
+
+.mobile-side-nav .side-nav-social-icons-div{
+
+  margin-top:15%;
+
+  width:calc(100% - 14px);
+
+  display:flex;
+
+  flex-wrap:wrap;
+
+  margin-left:14px;
+
+}
+
+.mobile-side-nav .side-nav-social-icons-div div{
+
+  display:inline-flex;
+
+  width:calc(100%/3);
+
+  text-align:center;
+
+  background:transparent;
+
+  margin-top:8px;
+
+}
+
+.mobile-side-nav .side-nav-social-icons-div div a span{
+
+  width:100%;
+
+  border-radius:100%;
+
+  text-decoration:none;
+
+}
+
+.mobile-side-nav .side-nav-social-icons-div div a .fa-facebook{
+
+  color:rgb(0,150,255);
+
+}
+
+.mobile-side-nav .side-nav-social-icons-div div a .fa-instagram{
+
+  color:rgb(255,0,150);
+
+  padding:2.5px 4px;
+
+}
+
+.mobile-side-nav .side-nav-social-icons-div div a .fa-whatsapp{
+
+  color:rgb(0,240,0);
+
+  padding:2.5px 4px;
+
+}
+
+.mobile-side-nav .side-nav-social-icons-div div a .fa-twitter{
+
+  color:rgb(50,200,255);
+
+  padding:2.5px 2.7px;
+
+}
+
+.mobile-side-nav .side-nav-social-icons-div div a .fa-github{
+
+  color: black;
+
+}
+
+.mobile-side-nav .side-nav-social-icons-div div a span:hover{
+
+  margin-top:-2px;
+
+  box-shadow:1px 1px 2px black;
+
+}
+
+.mobile-side-nav .side-nav-social-icons-div div a span{
+
+  font-size:24px;
+
+  text-align:center;
+
+  padding:3px;
+
+}
+
+.mobile-side-nav .side-nav-footer{
+
+  margin-top:40px;
+
+  background:white;
+
+  width:100%;
+
+}
+
+.mobile-side-nav .side-nav-footer a{
+
+  text-decoration:none;
+
+  background:transparent;
+
+  border:1px solid;
+
+  border-color:black transparent transparent transparent;
+
+  box-shadow:none;
+
+  display:inline-block;
+
+  width:100%;
+
+  border-radius:0;
+
+  padding:8px 13px;
+
+  margin:0;
+
+}
+
+.mobile-side-nav .side-nav-footer a:hover{
+
+    background:rgb(100,255,100);
+
+}
+
+@media only screen and (min-width:600px){
+
+  .mobile-side-nav .side-nav-social-icons-div div{
+
+    width:25%;
+
+    margin-top:12px;
+
+  }
+
+}
+
+@media only screen and (min-width:799px){
+
+  .mobile-top-nav{
+
+    display:none;
+
+  }
+
+  .mobile-side-nav{
+
+    display:none;
+
+  }
+
+}
+
+/*****Mobile Nav CSS End*/
+
+/*****Pc Nav CSS*/
+
+.pc-nav{
+
+  position:fixed;
+
+  top:0;
+
+  z-index:999;
+
+  width:100%;
+
+  background:white;
+
+  height:50px;
+
+  box-shadow:.1px .1px 2px rgb(170,170,170);
+
+}
+
+.pc-nav img{
+
+  width:130px;
+
+  margin-left:14px;
+
+  margin-bottom:-10px;
+
+  margin-top:5px;
+
+}
+
+.pc-nav img:hover{
+
+  margin-left:30px;
+
+}
+
+.pc-nav .links-div{
+
+  float:right;
+
+  margin-right:14px;
+
+}
+
+.pc-nav .links-div ul{
+
+  list-style:none;
+
+  display:inline-flex;
+
+}
+
+.pc-nav .links-div ul li{
+
+  font-size:18px;
+
+  font-weight:450;
+
+  font-family: 'Baloo Da 2', cursive;
+
+  margin-left:16px;
+
+  display:inline-block;
+
+  margin:0;
+
+  height:50px;
+
+  padding:10px;
+
+}
+
+.pc-nav .links-div ul li div{
+
+  display:none;
+
+  margin-right:-40px;
+
+  background:black;
+
+  border-radius:0 0 5px 5px;
+
+}
+
+.pc-nav .links-div ul li:hover div{
+
+  display:block;
+
+  position:absolute;
+
+  margin-top:14px;
+
+  margin-left:-45px;
+
+  margin-right:5px;
+
+}
+
+.pc-nav .links-div ul li .submenu ul{
+
+  display:block;
+
+  background:white;
+
+  border-radius:0 0 5px 5px;
+
+  border:.5px solid;
+
+  border-color:transparent rgb(245,245,245) rgb(245,245,245) rgb(245,245,245);
+
+}
+
+.pc-nav .links-div ul li .submenu ul li{
+
+  color:black;
+
+  margin-top:-50px;
+
+}
+
+.pc-nav .links-div ul li .submenu ul li:hover{
+
+  color:rgb(0,250,0);
+
+}
+
+.pc-nav .links-div ul li:hover{
+
+  color:rgb(0,250,0);
+
+}
+
+@media only screen and (max-width: 799px){
+
+  .pc-nav{
+
+    display:none;
+
+  }
+
+}

@@ -1,0 +1,305 @@
+<!doctype html>
+
+<html lang="en">
+
+    <head>
+    
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+        
+        <style type="text/css">
+        
+            .form{
+              padding:10px;
+            }
+            .form input,
+            .form textarea,
+            .form select{
+              margin-top:10px;
+              height:38px;
+              display:inline-block;
+            }
+            .form label{
+              margin-top:35px;
+            }
+            .form .textarea-big{
+              height:120px;
+            }
+            .form button{
+              font-size:20px;
+              font-weight:500;
+              width:100%;
+              background:rgb(100,255,100);
+              padding:5px;
+              border:3px solid;
+              border-color:rgb(100,255,100);
+              border-radius:5px;
+              outline:none;
+              color:white;
+            }
+            .form button:hover{
+              border-color:rgb(200,255,200);
+              background:white;
+              color:rgb(100,255,100);
+            }
+            
+        </style>
+        
+        <title>Hello, world!</title>
+        
+    </head>
+    
+    <body>
+            
+        <div class="form" id="course-upload-form">
+        
+            <div class="mb-3">
+                
+                <center>
+                
+                    <label class="form-label">Course Thumbnail</label>
+                    <input onchange="thumbnailSelected = true;" type="file" class="form-control" id="course-thumbnail">
+                    
+                    <hr>
+                    
+                    <textarea type="text" class="form-control" id="course-title" placeholder="Course Title" required></textarea>
+                    
+                    <hr>
+                    
+                    <textarea type="text" class="form-control textarea-big" id="course-description" placeholder="Course Description" required></textarea>
+                    
+                    <hr>
+                    
+                    <textarea type="text" class="form-control" id="course-mentor-name" placeholder="Course Mentor's Name" required></textarea>
+                    
+                    <hr>
+                    
+                    <label class="form-label">Course Mentor's Profile Pic</label>
+                    <input onchange="mentorPicSelected = true;" type="file" class="form-control" id="course-mentor-pic">
+                    
+                    <hr>
+                    
+                    <input type="number" class="form-control" id="course-price" placeholder="৳ Course Price" required>
+                    
+                    <select class="form-select" id="course-price-type" required>
+                        
+                        <option value="">Choose Price Type</option>
+                        <option value="Monthly">Monthly</option>
+                        <option value="Total">Total</option>
+                        
+                    </select>
+                    
+                    <input type="number" class="form-control" id="course-price-discount" placeholder="--৳ Course Price Discount" required>
+                    
+                    <hr>
+                    
+                    <label class="form-label">Select Course Categories</label><br><span class="dropdown-toggle"></span>
+                    <select id="course-catagories" class="form-select" aria-label="Default select example" multiple="multiple" required="required">
+                        
+                        <option value="Web Development">Web Development</option>
+                        <option value="App Development">App Development</option>
+                        <option value="Programming">Programming</option>
+                        <option value="Front-end">Front-end</option>
+                        <option value="Backend">Backend</option>
+                        
+                    </select>
+                    
+                </center>
+                
+            </div>
+        
+            <button onclick="uploadCourse()">Upload</button>
+            
+        </div>
+        
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-app.js"></script>
+        
+        <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+        <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-analytics.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-firestore.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-storage.js"></script>
+        
+        <script>
+        
+            // Your web app's Firebase configuration
+            // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        
+            var firebaseConfig = {
+        
+                apiKey: "AIzaSyCSjXvDSGyWGXU-ihSimGX9WJwGQcHs5uQ",
+                authDomain: "coders-hov-foundation.firebaseapp.com",
+                projectId: "coders-hov-foundation",
+                storageBucket: "coders-hov-foundation.appspot.com",
+                messagingSenderId: "559339542235",
+                appId: "1:559339542235:web:e2592eec279ee305969efe",
+                measurementId: "G-SC681SBCB7"
+        
+            };
+        
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+            firebase.analytics();
+        
+        </script>
+        
+        <script type="text/javascript">
+            
+            const courseUploadForm = document.getElementById("course-upload-form");
+            
+            function uploadCourse(){
+                
+                const courseUploadForm = document.getElementById("course-upload-form");
+                var courseThumbnail = document.getElementById("course-thumbnail").files[0];
+                var courseTitle = document.getElementById("course-title").value;
+                var courseDescription = document.getElementById("course-description").value;
+                var courseMentorPic = document.getElementById("course-mentor-pic").files[0];
+                var courseMentorName= document.getElementById("course-mentor-name").value;
+                var coursePrice = document.getElementById("course-price").value;
+                var coursePriceType = document.getElementById("course-price-type").value;
+                var coursePriceDiscount = document.getElementById("course-price-discount").value;
+                var courseCatagories = document.getElementById("course-catagories").options;
+                var selectedCatagories = [];
+                
+                for(var option of courseCatagories){
+                
+                    if(option.selected){
+                    
+                        selectedCatagories.push(option.value);
+                
+                    }
+                    
+                }
+                
+                if(document.getElementById("course-thumbnail").files.length == 0){
+                
+                    alert("Please Select Course Thumbnail.");
+                    return 0;
+                
+                }
+                
+                if(document.getElementById("course-mentor-pic").files.length == 0){
+                
+                    alert("Please Select Mentor's Pic.");
+                    return 0;
+                
+                }
+                
+                if(courseTitle == "" || courseDescription == "" || courseMentorName == "" || coursePrice == "" || coursePriceDiscount == "" || coursePriceType == ""){
+                
+                    alert("Please Fill Up All The Fields.");
+                    return 0;
+                
+                }
+                
+                if(selectedCatagories.length == 0){
+                
+                    alert("Please Select Course Categories.")
+                    return 0;
+                    
+                }
+                
+                var thumbnailStorageRef=firebase.storage().ref('/Course_Images/'+courseThumbnail.name);
+                
+                var thumbnailUploadTask=thumbnailStorageRef.put(courseThumbnail);
+                
+                thumbnailUploadTask.on('state_changed',function(snapshot){
+                
+                    let progress=(snapshot.bytesTransferred/snapshot.totalBytes)*100;
+                
+                    console.log("upload is "+progress+" done");
+                
+                },function(error){
+                
+                    console.log(error.message);
+                    alert(error);
+                    return;
+                
+                },function(){
+                
+                    thumbnailUploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL){
+                        
+                        window.thumbnailDownloadURL = downloadURL;
+                        
+                    }).then(function(){
+                        
+                        var mentorsPicStorageRef=firebase.storage().ref('/Course_Images/'+courseMentorPic.name);
+                            
+                        var mentorsPicUploadTask=mentorsPicStorageRef.put(courseMentorPic);
+                            
+                        mentorsPicUploadTask.on('state_changed',function(snapshot){
+                            
+                            let progress=(snapshot.bytesTransferred/snapshot.totalBytes)*100;
+                            
+                            console.log("upload is "+progress+" done");
+                            
+                        },function(error){
+                            
+                            console.log(error.message);
+                            alert(error);
+                            return;
+                            
+                        },function(){
+                            
+                            mentorsPicUploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL){
+                           
+                                window.mentorsPicDownloadURL = downloadURL;
+                            
+                            }).then(function(){
+                            
+                                firebase.firestore().collection("Courses").add({
+                                
+                                    Course_Title: courseTitle,
+                                    Course_Thumbnail: window.thumbnailDownloadURL,
+                                    Course_Description: courseDescription,
+                                    Course_Mentor_Pic: window.mentorsPicDownloadURL,
+                                    Course_Mentor_Name: courseMentorName,
+                                    Course_Price: coursePrice,
+                                    Course_Price_Type: coursePriceType,
+                                    Course_Price_Discount: coursePriceDiscount,
+                                    Course_Catagories: selectedCatagories
+                                    
+                                }).catch(function(error){
+                                
+                                    console.log(error);
+                                    alert(error);
+                                    return;
+                                
+                                }).then(function(){
+                                
+                                    alert("Course Upload Complete");
+                                    courseUploadForm.reset;
+                                
+                                });
+                            
+                            });
+                        
+                        });
+                        
+                    });
+                        
+                });
+                    
+            }
+        
+        </script>
+        
+        <!-- Optional JavaScript; choose one of the two! -->
+        
+        <!-- Option 1: Bootstrap Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+        
+        <!-- Option 2: Separate Popper and Bootstrap JS -->
+        <!--
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js" integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>
+        -->
+    
+    </body>
+    
+</html>
